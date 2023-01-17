@@ -72,10 +72,10 @@ public class EmployeeController {
     {
         log.info("新增员工信息:{}",employee.toString() );
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setCreateUser((Long) request.getSession().getAttribute("employee"));
-        employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setCreateUser((Long) request.getSession().getAttribute("employee"));
+//        employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
         employeeService.save(employee);
         return R.success("新增员工成功");
     }
@@ -89,8 +89,7 @@ public class EmployeeController {
      */
     @GetMapping("/page")
     public R<Page<Employee>> page(int page,int pageSize,String name){
-        log.info("page={},pageSize={},name={}",page,pageSize,name);
-        Page pageInfo=new Page(page,pageSize);
+        Page<Employee> pageInfo=new Page<>(page,pageSize);
         LambdaQueryWrapper<Employee> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotEmpty(name),Employee::getName,name);
         queryWrapper.orderByDesc(Employee::getUpdateTime);
@@ -105,8 +104,8 @@ public class EmployeeController {
      */
     @PutMapping
     public R<String> update(HttpServletRequest request,@RequestBody Employee employee){
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
         employeeService.updateById(employee);
         return R.success("员工信息修改成功");
     }
