@@ -3,6 +3,7 @@ package com.takeout.Controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.takeout.Service.CategoryService;
+import com.takeout.Service.impl.CategoryServiceImpl;
 import com.takeout.common.R;
 import com.takeout.entity.Category;
 import com.takeout.entity.Employee;
@@ -38,7 +39,14 @@ public class CategoryController {
     }
     @DeleteMapping
     public R<String> delete(Long ids){
-        categoryService.removeById(ids);
+        categoryService.remove(ids);
+//        categoryService.removeById(ids);
         return R.success("已删除");
+    }
+
+    @PutMapping
+    public R<String> update(HttpServletRequest request,@RequestBody Category category){
+        categoryService.updateById(category);
+        return R.success("修改分类信息修改成功");
     }
 }
